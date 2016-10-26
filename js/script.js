@@ -49,6 +49,15 @@ window.addEventListener('load', function(){
 
     enemies.forEach(function (ele, index) {
       ele.y += ele.speedY;
+
+      //checking borders
+      if (ele.y <=10) {
+        ele.y = 10;
+        ele.speedY *= -1;
+      } else if (ele.y >= GAME_HEIGHT - 50) {
+        ele.y = GAME_HEIGHT - 50;
+        ele.speedY *= -1;
+      }
     })
 
   };
