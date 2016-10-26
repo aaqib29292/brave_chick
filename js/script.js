@@ -48,6 +48,14 @@ window.addEventListener('load', function(){
     isMoving: false
   };
 
+  // goal object
+  var goal = {
+    x: 580, /*x coordinate*/
+    y: 160, /*y coordinate*/
+    w: 40, /*width*/
+    h: 40,/*height*/
+  };
+
 
   // getting canvas n context
   var canvas = document.getElementById('canvas');
@@ -86,7 +94,16 @@ window.addEventListener('load', function(){
   // updating the rectangle position
   var update = function() {
 
+    //  check for goal
+    if(checkCollision(player, goal)){
+      //stop the game
+      gameLive = false;
 
+      alert("YOU WON!");
+
+      //reload the page
+      window.location = "";
+    }
 
     //update player
     if(player.isMoving) {
@@ -107,7 +124,7 @@ window.addEventListener('load', function(){
         //reload the page
         window.location = "";
       }
-      
+
       // move enemies
       ele.y += ele.speedY;
 
@@ -133,15 +150,20 @@ window.addEventListener('load', function(){
     ctx.fillStyle = "rgb(100,100,200)";
     ctx.fillRect(player.x, player.y, player.w, player.h);
 
-    ctx.fillStyle = "rgb(200,0,100)";
 
     //draw each enemy
+
+    ctx.fillStyle = "rgb(200,0,100)";
 
     var n = enemies.length;
 
     enemies.forEach(function (ele, index) {
       ctx.fillRect(ele.x, ele.y, ele.w, ele.h);
     })
+
+    // draw goal
+    ctx.fillStyle = "rgb(128, 128, 0)";
+    ctx.fillRect(goal.x, goal.y, goal.w, goal.h);
 
   }
 
