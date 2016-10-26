@@ -35,7 +35,17 @@ window.addEventListener('load', function(){
       w: 40, /*width*/
       h: 40 /*height*/
     },
-  ]
+  ];
+
+  // player object
+  var player = {
+    x: 10, /*x coordinate*/
+    y: 160, /*y coordinate*/
+    speedX: 2, /*speed in Y*/
+    w: 40, /*width*/
+    h: 40,/*height*/
+    isMoving: false
+  };
 
   // getting canvas n context
   var canvas = document.getElementById('canvas');
@@ -43,6 +53,11 @@ window.addEventListener('load', function(){
 
   // updating the rectangle position
   var update = function() {
+
+    //update player
+    if(player.isMoving) {
+      player.x += player.speedX;
+    }
 
     // update the position of each enemy
     var n = enemies.length;
@@ -66,6 +81,12 @@ window.addEventListener('load', function(){
   var draw = function(){
     // clearing the canvas
     ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+
+    //draw player
+
+    ctx.fillStyle = "rgb(100,100,200)";
+    ctx.fillRect(player.x, player.y, player.w, player.h);
+
     ctx.fillStyle = "rgb(200,0,100)";
 
     //draw each enemy
