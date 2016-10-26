@@ -9,7 +9,6 @@ window.addEventListener('load', function(){
   //current level
   var level = 1
 
-
   var enemies = [
     {
       x: 100, /*x coordinate*/
@@ -75,7 +74,6 @@ window.addEventListener('load', function(){
     player.isMoving = false;
   }
 
-
   // events spacebar, mouseClick, and touch
   document.onkeydown = function (event) {
     if(event.keyCode == 32 ) {
@@ -109,7 +107,6 @@ window.addEventListener('load', function(){
     sprites.goal.src = "images/goal.png";
   }
 
-
   // updating the rectangle position
   var update = function() {
 
@@ -123,6 +120,8 @@ window.addEventListener('load', function(){
       // //reload the page
       // window.location = "";
 
+
+      // level uu the game after winning
       level++
 
       player.x = 10;
@@ -178,7 +177,7 @@ window.addEventListener('load', function(){
     // clearing the canvas
     ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-    // draw images
+  // draw images
 
     // background
     ctx.drawImage(sprites.background, 0, 0)
@@ -194,7 +193,7 @@ window.addEventListener('load', function(){
     // goal
     ctx.drawImage(sprites.goal, goal.x, goal.y)
 
-    // //draw player
+    // //draw player objects
     //
     // ctx.fillStyle = "rgb(100,100,200)";
     // ctx.fillRect(player.x, player.y, player.w, player.h);
