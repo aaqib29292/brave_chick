@@ -6,6 +6,9 @@ window.addEventListener('load', function(){
   var GAME_WIDTH = 640;
   var GAME_HEIGHT = 360;
 
+  //current level
+  var level = 1
+
 
   var enemies = [
     {
@@ -50,12 +53,14 @@ window.addEventListener('load', function(){
 
   // goal object
   var goal = {
-    x: 580, /*x coordinate*/
-    y: 160, /*y coordinate*/
-    w: 40, /*width*/
-    h: 40,/*height*/
+    x: 540, /*x coordinate*/
+    y: 140, /*y coordinate*/
+    w: 80, /*width*/
+    h: 80,/*height*/
   };
 
+  //sprites
+  var sprites = {};
 
   // getting canvas n context
   var canvas = document.getElementById('canvas');
@@ -90,6 +95,20 @@ window.addEventListener('load', function(){
   canvas.addEventListener('touchstart', movePlayer);
   canvas.addEventListener('touchdown', stopPlayer);
 
+  var load = function() {
+    sprites.player = new Image();
+    sprites.player.src = "images/hero.png";
+
+    sprites.background = new Image();
+    sprites.background.src = "images/background.jpg";
+
+    sprites.enemy = new Image();
+    sprites.enemy.src = "images/enemy.png";
+
+    sprites.goal = new Image();
+    sprites.goal.src = "images/goal.png";
+  }
+
 
   // updating the rectangle position
   var update = function() {
@@ -97,12 +116,26 @@ window.addEventListener('load', function(){
     //  check for goal
     if(checkCollision(player, goal)){
       //stop the game
-      gameLive = false;
+      // gameLive = false;
+      //
+      // alert("YOU WON!");
+      //
+      // //reload the page
+      // window.location = "";
 
-      alert("YOU WON!");
+      level++
 
-      //reload the page
-      window.location = "";
+      player.x = 10;
+      player.y = 160;
+
+      // speed up enemies speed
+      enemies.forEach(function (ele, index) {
+        if(ele.speedY > 0) {
+          ele.speedY++
+        } else {
+          ele.speedY--
+        }
+      })
     }
 
     //update player
@@ -145,25 +178,41 @@ window.addEventListener('load', function(){
     // clearing the canvas
     ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-    //draw player
+    // draw images
 
-    ctx.fillStyle = "rgb(100,100,200)";
-    ctx.fillRect(player.x, player.y, player.w, player.h);
+    // background
+    ctx.drawImage(sprites.background, 0, 0)
 
+    // player
+    ctx.drawImage(sprites.player, player.x, player.y)
 
-    //draw each enemy
-
-    ctx.fillStyle = "rgb(200,0,100)";
-
-    var n = enemies.length;
-
+    // enemy
     enemies.forEach(function (ele, index) {
-      ctx.fillRect(ele.x, ele.y, ele.w, ele.h);
+      ctx.drawImage(sprites.enemy, ele.x, ele.y)
     })
 
-    // draw goal
-    ctx.fillStyle = "rgb(128, 128, 0)";
-    ctx.fillRect(goal.x, goal.y, goal.w, goal.h);
+    // goal
+    ctx.drawImage(sprites.goal, goal.x, goal.y)
+
+    // //draw player
+    //
+    // ctx.fillStyle = "rgb(100,100,200)";
+    // ctx.fillRect(player.x, player.y, player.w, player.h);
+    //
+    //
+    // //draw each enemy
+    //
+    // ctx.fillStyle = "rgb(200,0,100)";
+    //
+    // var n = enemies.length;
+    //
+    // enemies.forEach(function (ele, index) {
+    //   ctx.fillRect(ele.x, ele.y, ele.w, ele.h);
+    // })
+    //
+    // // draw goal
+    // ctx.fillStyle = "rgb(128, 128, 0)";
+    // ctx.fillRect(goal.x, goal.y, goal.w, goal.h);
 
   }
 
@@ -186,7 +235,8 @@ window.addEventListener('load', function(){
   }
 
   // starting
-  step()
+  load();
+  step();
 
 
 
