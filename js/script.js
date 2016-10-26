@@ -47,9 +47,40 @@ window.addEventListener('load', function(){
     isMoving: false
   };
 
+
   // getting canvas n context
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext("2d");
+
+  // player status
+  var movePlayer = function () {
+    player.isMoving = true;
+  };
+
+  var stopPlayer = function () {
+    player.isMoving = false;
+  }
+
+
+  // events spacebar, mouseClick, and touch
+  document.onkeydown = function (event) {
+    if(event.keyCode == 32 ) {
+      movePlayer();
+    }
+  };
+
+  document.onkeyup = function (event) {
+    if(event.keyCode == 32 ) {
+      stopPlayer();
+    }
+  };
+
+  // event listeners to move player
+  canvas.addEventListener('mousedown', movePlayer);
+  canvas.addEventListener('mouseup', stopPlayer);
+  canvas.addEventListener('touchstart', movePlayer);
+  canvas.addEventListener('touchdown', stopPlayer);
+
 
   // updating the rectangle position
   var update = function() {
