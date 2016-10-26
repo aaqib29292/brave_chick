@@ -1,5 +1,6 @@
 window.addEventListener('load', function(){
 
+  var gameLive = true;
 
   // Constants
   var GAME_WIDTH = 640;
@@ -85,6 +86,8 @@ window.addEventListener('load', function(){
   // updating the rectangle position
   var update = function() {
 
+
+
     //update player
     if(player.isMoving) {
       player.x += player.speedX;
@@ -94,6 +97,18 @@ window.addEventListener('load', function(){
     var n = enemies.length;
 
     enemies.forEach(function (ele, index) {
+      // collision of player with the enemies
+      if(checkCollision(player, ele)) {
+        //stop the game
+        gameLive = false;
+
+        alert("GAME OVER!");
+
+        //reload the page
+        window.location = "";
+      }
+      
+      // move enemies
       ele.y += ele.speedY;
 
       //checking borders
@@ -135,8 +150,17 @@ window.addEventListener('load', function(){
 
     update();
     draw();
+    if(gameLive) {
+      window.requestAnimationFrame(step) /*repeats step function while animation*/
+    }
 
-    window.requestAnimationFrame(step) /*repeats step function while animation*/
+  }
+
+  var checkCollision = function (rect1, rect2) {
+    var closeOnWidth = Math.abs(rect1.x -rect2.x) <= Math.max(rect1.w, rect2.w)
+    var closeOnHeight = Math.abs(rect1.y -rect2.y) <= Math.max(rect1.h, rect2.h)
+
+    return closeOnWidth && closeOnHeight;
   }
 
   // starting
